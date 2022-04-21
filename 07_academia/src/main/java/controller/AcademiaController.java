@@ -24,8 +24,8 @@ public class AcademiaController {
 	
 	@PostMapping(value="Alta")
 	public String alta(@ModelAttribute Alumno alumno) {
-		aService.alta(alumno);
-		return "alta";
+		String res = aService.alta(alumno);
+		return res;
 	}
 	
 	@GetMapping(value="Buscador", produces = MediaType.APPLICATION_JSON_VALUE)

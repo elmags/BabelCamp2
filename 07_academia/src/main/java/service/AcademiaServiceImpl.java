@@ -20,7 +20,8 @@ public class AcademiaServiceImpl implements AcademiaService {
 			String sql = "INSERT INTO alumnos (nombre, curso, nota) VALUES (?, ?, ?)";
 			template.update(sql, alumno.getNombre(), alumno.getCurso(), alumno.getNota());
 			return "alta";
-		} else return "existe";
+		}
+		return "existe";
 	}
 
 	@Override

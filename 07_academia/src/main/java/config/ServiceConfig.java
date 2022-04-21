@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @PropertySource(value = "classpath:config/application.properties")
 @Configuration
-@ComponentScan(basePackages = {"service"})		// Sirve para decirle a Spring que paquetes debe escanear
+@ComponentScan(basePackages = {"service"})
 public class ServiceConfig {
 	@Value("${driver}")
 	String driver;

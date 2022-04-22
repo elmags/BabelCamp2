@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public List<Producto> buscar(String seccion) {
 		String jpql = "SELECT p FROM Producto p WHERE p.seccion = ?1";
-		Query qr = entityManager.createQuery(jpql);
+		TypedQuery<Producto> qr = entityManager.createQuery(jpql, Producto.class);
 		qr.setParameter(1, seccion);
 		List<Producto> productos = qr.getResultList();
 		return productos;

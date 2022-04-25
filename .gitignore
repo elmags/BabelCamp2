@@ -25,3 +25,19 @@ local.properties
 *.rar
 node_modules
 Servers
+# librerias proyectos normales
+!*/lib/*.jar
+# librerias proyectos web
+!*/WebContent/WEB-INF/lib/*.jar
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar

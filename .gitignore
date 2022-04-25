@@ -31,7 +31,6 @@ Servers
 !*/WebContent/WEB-INF/lib/*.jar
 
 ### Maven ###
-*/target/
 target/
 pom.xml.tag
 pom.xml.releaseBackup

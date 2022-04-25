@@ -57,4 +57,21 @@ public class ProductoServiceImpl implements ProductoService {
 		return entityManager.find(Producto.class, idProducto);
 	}
 
+	@Override
+	public Producto buscarNombre(String nombre) {
+		String jpql = "SELECT p FROM Producto p WHERE p.nombre = ?1";
+		TypedQuery<Producto> qr = entityManager.createQuery(jpql, Producto.class);
+		qr.setParameter(1, nombre);
+		List<Producto> productos = qr.getResultList();
+		return productos.isEmpty() ? null : productos.get(0);
+	}
+
+	@Override
+	public double mediaPrecioSeccion(String seccion) {
+		String jpql = "SELECT avg(p.precio) FROM Producto p WHERE p.seccion = ?1";
+		TypedQuery<Double> qr = entityManager.createQuery(jpql, Double.class);
+		qr.setParameter(1, seccion);
+		return qr.getSingleResult();
+	}
+
 }

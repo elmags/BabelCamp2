@@ -29,4 +29,6 @@ public interface ProductoService {
 	void baja(String nombre);
 	void modificar(String nombre, double precio);
 	Producto buscarId(int idProducto);
+	Producto buscarNombre(String nombre);
+	double mediaPrecioSeccion(String seccion);
 }

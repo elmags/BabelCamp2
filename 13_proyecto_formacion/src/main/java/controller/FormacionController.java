@@ -1,0 +1,103 @@
+package controller;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import model.Alumno;
+import model.Curso;
+import service.FormacionService;
+
+@CrossOrigin("*")
+@Controller
+public class FormacionController {
+
+	@Autowired
+	FormacionService fService;
+	
+	@PostMapping(value="Validar")
+	public String validar(@RequestParam("usuario") String usuario, @RequestParam("password") String password) {
+		Alumno alumno = fService.validarUsuario(usuario, password);
+		if (alumno != null) return "menu";
+		else return "errorLog";
+	}
+	
+	@GetMapping(value="AlumnosCurso", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Alumno> alumnosPorCurso(@RequestParam("nombre") String nombre) {
+		return fService.alumnosCurso(nombre);
+	}
+	
+	@GetMapping(value="Alumnos", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Alumno> alumnos() {
+		return fService.alumnos();
+	}
+	
+	@GetMapping(value="CursosAlumno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Curso> cursosPorAlumno(@RequestParam("usuario") String usuario) {
+		return fService.cursosAlumno(usuario);
+	}
+	
+	@GetMapping(value="Cursos", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Curso> cursos() {
+		return fService.cursos();
+	}
+	
+	@PostMapping(value="Matricular")
+	public String matricular(@RequestParam("usuario") String usuario, @RequestParam("idCurso") int idCurso) {
+		fService.matricular(usuario, idCurso);
+		return "matricular";
+	}
+	
+	@PostMapping(value="AltaAlumno")
+	public String altaAlumno(@ModelAttribute Alumno alumno) {
+		if (fService.altaAlumno(alumno)) {
+			return "altaAlumno";
+		}
+		return "errorAlumno";
+	}
+	
+	@PostMapping(value="AltaCurso")
+	public String altaCurso(@ModelAttribute Curso curso) {
+		if (fService.altaCurso(curso)) {
+			return "altaCurso";
+		}
+		return "errorCurso";
+	}
+	
+	@GetMapping(value="CursosNoMatriculados", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Curso> cursosNoMatriculados(@RequestParam("usuario") String usuario) throws ParseException {
+		return fService.cursosNoMatriculados(usuario);
+	}
+	
+//	@GetMapping(value="CursosEntreFecha", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public @ResponseBody List<Curso> cursosEntreFecha(@RequestParam("fechaInicio") String fecha1, @RequestParam("fechaFin") String fecha2) {
+//		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//		Date d1, d2;
+//		try {
+//			d1 = formato.parse(fecha1);
+//			d2 = formato.parse(fecha2);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		return fService.cursosEntreFecha(d1, d2);
+//	}
+	
+	@GetMapping(value="CursosEntreFecha", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Curso> cursosEntreFecha(@RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date d1,
+													  @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date d2) {
+		return fService.cursosEntreFecha(d1, d2);
+	}
+}

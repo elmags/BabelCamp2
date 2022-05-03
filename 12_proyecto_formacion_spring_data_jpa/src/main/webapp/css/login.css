@@ -1,0 +1,18 @@
+.login {
+	text-align: center;
+	font-family: 'Segoe UI';
+}
+
+.boton {
+    padding: 8px;
+    border-width: 1px;
+    background-color: rgb(180, 180, 180);
+}
+
+.text {
+	padding: 8px;
+}
+
+.caja {
+	margin-bottom: 10px;
+}

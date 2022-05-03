@@ -1,0 +1,17 @@
+.borde {
+    padding: 15px 10px;
+    text-align: center;
+    font-family: 'Segoe UI';
+}
+
+.menu {
+    display:inline-block;
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(180, 180, 180);
+    padding: 20px;
+}
+
+a {
+    padding: 12px;
+}

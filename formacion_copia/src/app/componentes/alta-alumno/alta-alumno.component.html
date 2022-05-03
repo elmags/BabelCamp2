@@ -1,0 +1,19 @@
+<div class="content">
+    <div class="container">
+      <h2>Alta de un alumno</h2>
+      <div class="errores">
+        <p class="error" *ngIf="error == 1">Debe rellenar todos lo campos</p>
+      </div>
+      <form action="AltaAlumno" method="post">
+        <div class="caja"><input class="text" type="text" name="usuario" placeholder="Nombre de usuario" [(ngModel)]="usuario"/></div>
+        <div class="caja"><input class="text" type="password" name="password" placeholder="Contraseña" [(ngModel)]="password"/></div>
+        <div class="caja"><input class="text" type="text" name="nombre" placeholder="Nombre" [(ngModel)]="nombre"/></div>
+        <div class="caja"><input class="text" type="email" name="email" placeholder="Email" [(ngModel)]="email"/></div>
+        <div class="caja"><input class="text" type="number" name="edad" placeholder="Edad" [(ngModel)]="edad"/></div>
+        <div>
+            <input class="boton" type="submit" (click)="administrarErrores()" value="Guardar" />
+            <input class="boton" type="button" (click)="vaciar()" value="Vaciar" />
+        </div>
+    </form>
+    </div>
+  </div>

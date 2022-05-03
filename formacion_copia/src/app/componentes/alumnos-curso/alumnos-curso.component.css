@@ -1,0 +1,23 @@
+.boton {
+    padding: 8px;
+    border-width: 1px;
+    background-color: rgb(180, 180, 180);
+}
+
+.select {
+    padding: 8px;
+    border-width: 1px;
+    margin-left: 2px;
+}
+
+.content {
+    padding: 25px 10px;
+    text-align: center;
+    font-family: 'Segoe UI';
+}
+
+table {
+    margin-top: 10px;
+    border: 1;
+    margin: 30px auto;
+}

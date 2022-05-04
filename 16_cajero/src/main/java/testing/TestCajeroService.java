@@ -1,12 +1,14 @@
 package testing;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,16 +40,16 @@ public class TestCajeroService {
 		assertEquals(cService.mostrarSaldo(cuenta2), 880);
 	}
 	
-//	/* Test movimientos */
-//	@Test
-//	void test6Cajero() {
-//		CuentaDto cuenta = new CuentaDto(2000, 670, "recibos");
-//		Calendar c1 = Calendar.getInstance();
-//		Calendar c2 = Calendar.getInstance();
-//		c1.set(2021, 1, 20);
-//		c2.set(2022, 4, 20);
-//		Date d1 = c1.getTime();
-//		Date d2 = c2.getTime();
-//		assertEquals(cService.movimientos(cuenta, d1, d2), 4);
-//	}
+	/* Test movimientos */
+	@Test
+	void test3Cajero() {
+		CuentaDto cuenta = new CuentaDto(2000, 670, "recibos");
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		c1.set(2021, 1, 20);
+		c2.set(2022, 3, 23);
+		Date d1 = c1.getTime();
+		Date d2 = c2.getTime();
+		assertEquals(cService.movimientos(cuenta, d1, d2).size(), 4);
+	}
 }

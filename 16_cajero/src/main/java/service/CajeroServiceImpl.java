@@ -1,6 +1,6 @@
 package service;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -44,8 +44,9 @@ public class CajeroServiceImpl implements CajeroService {
 	public void ingresarDinero(CuentaDto cuentaDto, double cantidad) {
 		cuentaDto.setSaldo(cuentaDto.getSaldo() + cantidad);
 		conversor.cuentaToDto(cuentasDao.save(conversor.dtoToCuenta(cuentaDto)));
-		Calendar c1 = Calendar.getInstance();
-		movimientosDao.save(new Movimiento(cuentaDto.getNumeroCuenta(), c1.getTime(), cantidad, "ingreso"));
+		Long datetime = System.currentTimeMillis();
+		Timestamp timestamp = new Timestamp(datetime);
+		movimientosDao.save(new Movimiento(cuentaDto.getNumeroCuenta(), timestamp, cantidad, "ingreso"));
 	}
 
 	@Transactional
@@ -53,8 +54,9 @@ public class CajeroServiceImpl implements CajeroService {
 	public void extraerDinero(CuentaDto cuentaDto, double cantidad) {
 		cuentaDto.setSaldo(cuentaDto.getSaldo() - cantidad);
 		conversor.cuentaToDto(cuentasDao.save(conversor.dtoToCuenta(cuentaDto)));
-		Calendar c1 = Calendar.getInstance();
-		movimientosDao.save(new Movimiento(cuentaDto.getNumeroCuenta(), c1.getTime(), cantidad, "extracción"));
+		Long datetime = System.currentTimeMillis();
+		Timestamp timestamp = new Timestamp(datetime);
+		movimientosDao.save(new Movimiento(cuentaDto.getNumeroCuenta(), timestamp, cantidad, "extracción"));
 	}
 
 	@Transactional
@@ -72,7 +74,7 @@ public class CajeroServiceImpl implements CajeroService {
 
 	@Override
 	public List<MovimientoDto> movimientos(CuentaDto cuentaDto, Date fechaInicio, Date fechaFin) {
-		return movimientosDao.findBetweenDate(fechaInicio, fechaFin)
+		return movimientosDao.findBetweenDate(cuentaDto.getNumeroCuenta(), fechaInicio, fechaFin)
 			   .stream().map(m -> conversor.movimientoToDto(m)).collect(Collectors.toList());
 	}
 }

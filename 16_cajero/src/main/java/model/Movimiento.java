@@ -30,7 +30,7 @@ public class Movimiento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idMovimiento;
 	private int idCuenta;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	private double cantidad;
 	private String operacion;

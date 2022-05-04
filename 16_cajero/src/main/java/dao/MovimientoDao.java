@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import model.Movimiento;
 
 public interface MovimientoDao extends JpaRepository<Movimiento, Integer>{
-//	@Query("SELECT m FROM Movimiento m WHERE m.idCuenta = ?1 IN (?2)")
-//	List<Movimiento> findMovimientos(int idCuenta, List<Movimiento> movimientos);
-	@Query("SELECT m FROM Movimiento m WHERE m.fecha BETWEEN ?1 AND ?2")
-	List<Movimiento> findBetweenDate(Date fechaInicio, Date fechaFin);
+	@Query("SELECT m FROM Movimiento m WHERE m.idCuenta = ?1 AND m.fecha BETWEEN ?2 AND ?3")
+	List<Movimiento> findBetweenDate(int idCuenta, Date fechaInicio, Date fechaFin);
 }

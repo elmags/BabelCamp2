@@ -15,7 +15,9 @@ public interface FormacionService {
 	boolean matricular(String usuario, int idCurso);
 	List<AlumnoDto> alumnos();
 	boolean altaAlumno(AlumnoDto alumno);
-	boolean altaCurso(CursoDto curso);
+	boolean altaCurso(String nombre, int duracion, Date fechaInicio, double precio);
 	List<CursoDto> cursosNoMatriculados(String usuario);
 	List<MatriculaDto> cursosEntreFecha(Date fechaInicio, Date fechaFin);
+	AlumnoDto alumno(String nombre);
+	CursoDto curso(String nombre);
 }

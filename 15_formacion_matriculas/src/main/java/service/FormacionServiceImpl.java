@@ -62,8 +62,12 @@ public class FormacionServiceImpl implements FormacionService {
 	public boolean matricular(String usuario, int idCurso) {		
 		Optional<Alumno> alumno = alumnosDao.findById(usuario);
 		Optional<Curso> curso = cursosDao.findById(idCurso);
-		if (alumno.isPresent() && curso.isPresent()) {	
+		System.out.println(alumno.isPresent());
+		System.out.println(curso.isPresent());
+		if (alumno.isPresent() && curso.isPresent()) {
+			System.out.println("2");
 			matriculasDao.save(new Matricula(new MatriculaPK(usuario, idCurso), 0, alumno.get(), curso.get()));
+			System.out.println("3");
 			return true;
 		}
 		return false;
@@ -85,10 +89,10 @@ public class FormacionServiceImpl implements FormacionService {
 	}
 	
 	@Override
-	public boolean altaCurso(CursoDto curso) {
-		Optional<Curso> c = cursosDao.findByNombre(curso.getNombre());
+	public boolean altaCurso(String nombre, int duracion, Date fechaInicio, double precio) {
+		Optional<Curso> c = cursosDao.findByNombre(nombre);
 		if (c.isEmpty()) {
-			cursosDao.save(conversor.dtoToCurso(curso));
+			cursosDao.save(new Curso(nombre, duracion, fechaInicio, precio));
 			return true;
 		}
 		return false;
@@ -102,5 +106,21 @@ public class FormacionServiceImpl implements FormacionService {
 	@Override
 	public List<MatriculaDto> cursosEntreFecha(Date fechaInicio, Date fechaFin) {
 		return matriculasDao.findBetweenDate(fechaInicio, fechaFin).stream().map(m -> conversor.matriculaToDto(m)).collect(Collectors.toList());
+	}
+
+	@Override
+	public AlumnoDto alumno(String nombre) {
+		Optional<Alumno> a = alumnosDao.findByNombre(nombre);
+		if (a.isPresent())
+			return conversor.alumnoToDto(a.get());
+		return null;
+	}
+
+	@Override
+	public CursoDto curso(String nombre) {
+		Optional<Curso> c = cursosDao.findByNombre(nombre);
+		if (c.isPresent())
+			return conversor.cursoToDto(c.get());
+		return null;
 	}
 }

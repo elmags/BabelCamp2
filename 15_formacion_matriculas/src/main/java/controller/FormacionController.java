@@ -20,7 +20,7 @@ import dtos.CursoDto;
 import dtos.MatriculaDto;
 import service.FormacionService;
 
-@CrossOrigin("*")
+@CrossOrigin("*")	// Permite llamadas de cualquier origen (Autorizacion CORS)
 @Controller
 public class FormacionController {
 
@@ -56,24 +56,26 @@ public class FormacionController {
 	
 	@PostMapping(value="Matricular")
 	public String matricular(@RequestParam("usuario") String usuario, @RequestParam("idCurso") int idCurso) {
-		if (fService.matricular(usuario, idCurso)) return "matricular";
-		return "errorMatricular";
+		System.out.println("1  " + idCurso + "  " + usuario);
+		fService.matricular(usuario, idCurso);
+		System.out.println("4");
+		return "menu";
 	}
 	
 	@PostMapping(value="AltaAlumno")
 	public String altaAlumno(@ModelAttribute AlumnoDto alumno) {
 		if (fService.altaAlumno(alumno)) {
-			return "altaAlumno";
+			return "menu";
 		}
-		return "errorAlumno";
+		return "errorAltaAlumno";
 	}
 	
 	@PostMapping(value="AltaCurso")
-	public String altaCurso(@ModelAttribute CursoDto curso) {
-		if (fService.altaCurso(curso)) {
-			return "altaCurso";
+	public String altaCurso(@RequestParam("nombre") String nombre, @RequestParam("duracion") int duracion, @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @RequestParam("precio") double precio) {
+		if (fService.altaCurso(nombre, duracion, fechaInicio, precio)) {
+			return "menu";
 		}
-		return "errorCurso";
+		return "errorAltaCurso";
 	}
 	
 	@GetMapping(value="CursosNoMatriculados", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -98,6 +100,17 @@ public class FormacionController {
 	@GetMapping(value="Matriculas", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<MatriculaDto> cursosEntreFecha(@RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date d1,
 													  @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date d2) {
+		System.out.println("Matriculas");
 		return fService.cursosEntreFecha(d1, d2);
+	}
+	
+	@GetMapping(value="Alumno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AlumnoDto getAlumno(@RequestParam("nombre") String nombre) {
+		return fService.alumno(nombre);
+	}
+	
+	@GetMapping(value="Curso", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody CursoDto getCurso(@RequestParam("nombre") String nombre) {
+		return fService.curso(nombre);
 	}
 }
